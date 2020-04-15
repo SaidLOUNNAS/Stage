@@ -1,0 +1,49 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>détail</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onClose()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <div class="ion-margin-vertical">
+      <ion-item lines="none">
+        <ion-label position="stacked">Nom</ion-label>
+        <ion-input type="text" [value]="formateur.get('name')" readonly></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="ion-margin-vertical">
+      <ion-item lines="none">
+        <ion-label position="stacked">Mail</ion-label>
+        <ion-input type="email" [value]="formateur.get('email')" readonly></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="ion-margin-vertical">
+      <ion-item lines="none">
+        <ion-label position="stacked">date de naissance</ion-label>
+        <ion-input type="text" [value]="formateur.get('status')" readonly></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="ion-margin-vertical">
+      <ion-item lines="none">
+        <ion-label position="stacked">créer à </ion-label>
+        <ion-input type="text" [value]="formateur.get('createdAt') | date: 'medium'" readonly></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="ion-margin-vertical">
+      <ion-item lines="none">
+        <ion-label position="stacked">Mise à jour </ion-label>
+        <ion-input type="text" [value]="formateur.get('updatedAt') | date: 'medium'" readonly></ion-input>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>

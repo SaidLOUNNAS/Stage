@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Profil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onLogout()">
+        {{user.get('name')}}
+        <ion-icon slot="end" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+  <ion-grid fixed class="ion-padding">
+    <div class="ion-padding">
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="stacked">Nom</ion-label>
+          <ion-input type="text" [value]="user.get('name')" readonly></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="stacked">Mail</ion-label>
+          <ion-input type="email" [value]="user.get('email')" readonly></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="stacked">rien pour linstant</ion-label>
+          <ion-input type="text" [value]="user.get('status')" readonly></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="stacked">créer à</ion-label>
+          <ion-input type="text" [value]="user.get('createdAt') | date: 'medium'" readonly></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="stacked">Mis à jour </ion-label>
+          <ion-input type="text" [value]="user.get('updatedAt') | date: 'medium'" readonly></ion-input>
+        </ion-item>
+      </div>
+    </div>
+
+    <ion-button (click)="onChangePassword()">
+      <ion-icon slot="start" name="create"></ion-icon>
+      Changer le mot de passe
+    </ion-button>
+  </ion-grid>
+</ion-content>

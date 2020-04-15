@@ -1,0 +1,42 @@
+<ion-content>
+  <div class="container">
+    <ion-card>
+      <ion-card-header class="ion-text-center">
+        <h2>Espace école multimédia</h2>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+          <ion-item class="ion-margin-vertical" color="light" lines="none">
+            <ion-input
+              type="email"
+              formControlName="email"
+              placeholder="Email"
+              autocomplete="false"
+              (keyup.enter)="onSubmit()"
+            >
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="ion-margin-vertical" color="light" lines="none">
+            <ion-input type="password" formControlName="password" placeholder="Password" (keyup.enter)="onSubmit()">
+            </ion-input>
+          </ion-item>
+
+          <div class="ion-text-center">
+            <ion-button type="submit" shape="round" [disabled]="(isLoading$ | async) || form.invalid">
+              <ion-spinner *ngIf="isLoading$ | async"></ion-spinner>
+              S'identifier
+            </ion-button>
+          </div>
+        </form>
+
+        <div class="ion-padding-top">
+          <ion-text class="ion-text-end" color="dark">
+            <p tappable (click)="onResetPassword()">Mot de passe oublié</p>
+          </ion-text>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

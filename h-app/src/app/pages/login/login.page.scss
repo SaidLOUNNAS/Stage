@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  justify-content: center;
+  min-height: 100%;
+  padding: 0;
+}
+
+ion-card {
+  align-self: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+ion-item {
+  --border-radius: 8px;
+}
+
+ion-spinner {
+  position: absolute;
+}
+
+p {
+  font-weight: bold;
+}

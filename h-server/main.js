@@ -1,0 +1,2 @@
+require('./etudiant');
+require('./formateur');
