@@ -1,0 +1,97 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Ajouter un formteur</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onClose()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="floating">Nom <ion-text color="danger">*</ion-text> </ion-label>
+          <ion-input type="text" formControlName="name" (keyup.enter)="onSubmit()"></ion-input>
+        </ion-item>
+        <div *ngIf="form.controls.name.hasError('required') && form.controls.name.dirty">
+          <ion-text color="danger">
+            <small>Le nom est requis.</small>
+          </ion-text>
+        </div>
+        <div *ngIf="form.controls.name.hasError('minlength') && form.controls.name.dirty">
+          <ion-text color="danger">
+            <small>Le nom doit comporter au moins 2 caractères.</small>
+          </ion-text>
+        </div>
+
+        <div *ngIf="form.controls.name.hasError('maxlength') && form.controls.name.dirty">
+          <ion-text color="danger">
+            <small>Le nom doit comporter au maximum 24 caractères.</small>
+          </ion-text>
+        </div>
+      </div>
+
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="floating">Mail <ion-text color="danger">*</ion-text> </ion-label>
+          <ion-input type="email" formControlName="email" (keyup.enter)="onSubmit()"></ion-input>
+        </ion-item>
+
+        <div *ngIf="form.controls.email.hasError('required') && form.controls.email.dirty">
+          <ion-text color="danger">
+            <small>Mail est requis.</small>
+          </ion-text>
+        </div>
+
+        <div *ngIf="form.controls.email.hasError('email') && form.controls.email.dirty">
+          <ion-text color="danger">
+            <small>Mail n'est pas valide.</small>
+          </ion-text>
+        </div>
+      </div>
+
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="floating">mot de passe <ion-text color="danger">*</ion-text> </ion-label>
+          <ion-input type="password" formControlName="password" (keyup.enter)="onSubmit()"></ion-input>
+        </ion-item>
+
+        <div *ngIf="form.controls.password.hasError('required') && form.controls.password.dirty">
+          <ion-text color="danger">
+            <small>Mot de passe requis.</small>
+          </ion-text>
+        </div>
+
+        <div *ngIf="form.controls.password.hasError('password') && form.controls.password.dirty">
+          <ion-text color="danger">
+            <small>Le mot de passe doit avoir minimum de 8 et maximum de 24 caractères.</small>
+          </ion-text>
+        </div>
+      </div>
+
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="floating">Confirmez le mot de passe</ion-label>
+          <ion-input type="password" formControlName="confirmPassword" (keyup.enter)="onSubmit()"></ion-input>
+        </ion-item>
+
+        <div *ngIf="form.controls.confirmPassword.hasError('NoPassswordMatch') && form.controls.confirmPassword.dirty">
+          <ion-text color="danger">
+            <small>Aucune correspondance de mot de passe.</small>
+          </ion-text>
+        </div>
+      </div>
+
+      <div class="ion-text-center">
+        <ion-button type="submit" shape="round" [disabled]="(isLoading$ | async) || form.invalid">
+          <ion-spinner *ngIf="isLoading$ | async"></ion-spinner>
+          Enregistrer
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>
