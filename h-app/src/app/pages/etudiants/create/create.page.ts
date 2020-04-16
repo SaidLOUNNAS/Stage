@@ -14,7 +14,7 @@ import { EtudiantService } from '../../../services/user.service';
   selector: 'app-users-create',
   templateUrl: './create.page.html',
   styleUrls: ['./create.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreatePage extends Base implements OnInit {
   form: FormGroup;
@@ -44,6 +44,7 @@ export class CreatePage extends Base implements OnInit {
           await this.presentToast(error.message);
         } else {
           await this.presentToast('ERROR_NETWORK');
+          console.log(error.message);
         }
       }
     }
@@ -57,12 +58,29 @@ export class CreatePage extends Base implements OnInit {
     this.form = this.fb.group(
       {
         name: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
-        email: [null, Validators.compose([Validators.required, CustomValidators.patternValidator(Patterns.email, { email: true })])],
-        password: [null, Validators.compose([Validators.required, CustomValidators.patternValidator(Patterns.password, { password: true })])],
-        confirmPassword: [null]
+        date_naissance: [
+          null,
+          Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)]),
+        ],
+        absences: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
+        class: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
+        email: [
+          null,
+          Validators.compose([Validators.required, CustomValidators.patternValidator(Patterns.email, { email: true })]),
+        ],
+        phone: [null, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(24)])],
+
+        password: [
+          null,
+          Validators.compose([
+            Validators.required,
+            CustomValidators.patternValidator(Patterns.password, { password: true }),
+          ]),
+        ],
+        confirmPassword: [null],
       },
       {
-        validator: CustomValidators.passwordMatchValidator
+        validator: CustomValidators.passwordMatchValidator,
       }
     );
   }

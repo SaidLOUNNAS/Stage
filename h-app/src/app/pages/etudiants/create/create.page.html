@@ -11,10 +11,11 @@
 
 <ion-content>
   <div class="ion-padding">
+    <!-- pour le nom et prenom -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
       <div class="ion-margin-vertical">
         <ion-item lines="none">
-          <ion-label position="floating">Nom <ion-text color="danger">*</ion-text> </ion-label>
+          <ion-label position="floating">Nom et Prénom<ion-text color="danger">*</ion-text> </ion-label>
           <ion-input type="text" formControlName="name" (keyup.enter)="onSubmit()"></ion-input>
         </ion-item>
         <div *ngIf="form.controls.name.hasError('required') && form.controls.name.dirty">
@@ -34,7 +35,76 @@
           </ion-text>
         </div>
       </div>
+      <!-- pour la date de naissance -->
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="floating">Date de Naissance<ion-text color="danger">*</ion-text> </ion-label>
+          <ion-input type="Date" formControlName="date_naissance" (keyup.enter)="onSubmit()"></ion-input>
+        </ion-item>
+        <div *ngIf="form.controls.date_naissance.hasError('required') && form.controls.date_naissance.dirty">
+          <ion-text color="danger">
+            <small>La date est requis.</small>
+          </ion-text>
+        </div>
+        <div *ngIf="form.controls.date_naissance.hasError('minlength') && form.controls.date_naissance.dirty">
+          <ion-text color="danger">
+            <small>La date doit comporter au moins 2 caractères.</small>
+          </ion-text>
+        </div>
 
+        <div *ngIf="form.controls.date_naissance.hasError('maxlength') && form.controls.date_naissance.dirty">
+          <ion-text color="danger">
+            <small>La date doit comporter au maximum 24 caractères.</small>
+          </ion-text>
+        </div>
+      </div>
+      <!-- pour le nombre d'absensce -->
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="floating">Le nombre d'absences<ion-text color="danger">*</ion-text> </ion-label>
+          <ion-input type="text" formControlName="absences" (keyup.enter)="onSubmit()"></ion-input>
+        </ion-item>
+        <div *ngIf="form.controls.absences.hasError('required') && form.controls.absences.dirty">
+          <ion-text color="danger">
+            <small>Le nom est requis.</small>
+          </ion-text>
+        </div>
+        <div *ngIf="form.controls.absences.hasError('minlength') && form.controls.absences.dirty">
+          <ion-text color="danger">
+            <small>Le nom doit comporter au moins 2 caractères.</small>
+          </ion-text>
+        </div>
+
+        <div *ngIf="form.controls.absences.hasError('maxlength') && form.controls.absences.dirty">
+          <ion-text color="danger">
+            <small>Le nom doit comporter au maximum 24 caractères.</small>
+          </ion-text>
+        </div>
+      </div>
+      <!-- pour les classes -->
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="floating">Classe<ion-text color="danger">*</ion-text> </ion-label>
+          <ion-input type="text" formControlName="class" (keyup.enter)="onSubmit()"></ion-input>
+        </ion-item>
+        <div *ngIf="form.controls.class.hasError('required') && form.controls.class.dirty">
+          <ion-text color="danger">
+            <small>Le nom est requis.</small>
+          </ion-text>
+        </div>
+        <div *ngIf="form.controls.class.hasError('minlength') && form.controls.class.dirty">
+          <ion-text color="danger">
+            <small>Le nom doit comporter au moins 2 caractères.</small>
+          </ion-text>
+        </div>
+
+        <div *ngIf="form.controls.class.hasError('maxlength') && form.controls.class.dirty">
+          <ion-text color="danger">
+            <small>Le nom doit comporter au maximum 24 caractères.</small>
+          </ion-text>
+        </div>
+      </div>
+      <!-- pour le mail -->
       <div class="ion-margin-vertical">
         <ion-item lines="none">
           <ion-label position="floating">Mail <ion-text color="danger">*</ion-text> </ion-label>
@@ -53,7 +123,30 @@
           </ion-text>
         </div>
       </div>
+      <!-- numéro de téléphone -->
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="floating">Numéro de Téléphone<ion-text color="danger">*</ion-text> </ion-label>
+          <ion-input type="number" formControlName="phone" (keyup.enter)="onSubmit()"></ion-input>
+        </ion-item>
+        <div *ngIf="form.controls.phone.hasError('required') && form.controls.phone.dirty">
+          <ion-text color="danger">
+            <small>Le nombre est requis.</small>
+          </ion-text>
+        </div>
+        <div *ngIf="form.controls.phone.hasError('minlength') && form.controls.phone.dirty">
+          <ion-text color="danger">
+            <small>Le nombre doit comporter au moins 2 caractères.</small>
+          </ion-text>
+        </div>
 
+        <div *ngIf="form.controls.phone.hasError('maxlength') && form.controls.phone.dirty">
+          <ion-text color="danger">
+            <small>Le nombre doit comporter au maximum 24 caractères.</small>
+          </ion-text>
+        </div>
+      </div>
+      <!-- pour le mot de passe -->
       <div class="ion-margin-vertical">
         <ion-item lines="none">
           <ion-label position="floating">mot de passe <ion-text color="danger">*</ion-text> </ion-label>

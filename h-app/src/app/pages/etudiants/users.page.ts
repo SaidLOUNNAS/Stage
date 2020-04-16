@@ -59,7 +59,11 @@ export class UsersPage extends Base implements OnInit {
 
     try {
       const user = await this.userService.getEtudiant(id);
-      const modal = await this.modalCtrl.create({ component: DetailPage, componentProps: { user }, backdropDismiss: false });
+      const modal = await this.modalCtrl.create({
+        component: DetailPage,
+        componentProps: { user },
+        backdropDismiss: false,
+      });
       this.loadingCtrl.dismiss();
       await modal.present();
     } catch (error) {}
