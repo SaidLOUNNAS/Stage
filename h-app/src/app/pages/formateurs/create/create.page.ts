@@ -57,6 +57,9 @@ export class CreatePage extends Base implements OnInit {
     this.form = this.fb.group(
       {
         name: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
+        dat: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
+        phone: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
+        class: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
         email: [
           null,
           Validators.compose([Validators.required, CustomValidators.patternValidator(Patterns.email, { email: true })]),

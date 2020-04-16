@@ -14,8 +14,11 @@ Parse.Cloud.define('createFormateur', async (request) => {
   // Créer un utilisateur
   const user = new Parse.User();
   user.set('name', params.name);
+  user.set('dat', params.dat);
+  user.set('class,', params.class);
   user.set('email', params.email);
   user.set('username', params.email); // complete database
+  user.set('phone', params.phone);
   user.set('password', params.password);
   user.set('type', 'formateur');
 

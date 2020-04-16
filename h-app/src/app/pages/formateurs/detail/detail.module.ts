@@ -7,6 +7,7 @@ import { DetailPage } from './detail.page';
 
 @NgModule({
   imports: [CommonModule, IonicModule],
-  declarations: [DetailPage]
+  declarations: [DetailPage],
+  entryComponents: [DetailPage],
 })
 export class DetailModule {}
