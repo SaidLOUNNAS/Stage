@@ -37,6 +37,11 @@ export class AppComponent {
         url: '/users',
         icon: 'people',
       },
+      {
+        title: 'Classes',
+        url: '/classes',
+        icon: 'albums-outline',
+      },
 
       {
         title: 'Profil',
