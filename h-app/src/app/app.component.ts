@@ -23,7 +23,7 @@ export class AppComponent {
       {
         title: 'Accueil',
         url: '/dashboard',
-        icon: 'aperture',
+        icon: 'home-outline',
       },
 
       {
@@ -41,6 +41,11 @@ export class AppComponent {
         title: 'Classes',
         url: '/classes',
         icon: 'albums-outline',
+      },
+      {
+        title: 'Cours',
+        url: '/cours',
+        icon: 'reader-outline',
       },
 
       {
