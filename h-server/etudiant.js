@@ -11,13 +11,9 @@ Parse.Cloud.define('createEtudiant', async (request) => {
     throw 'NOT_AUTHORIZED';
   }
 
-  // Créer un utilisateur
-
   const user = new Parse.User();
   user.set('name', params.name);
   user.set('date_naissance', params.date_naissance);
-  user.set('absences', params.absences);
-  user.set('class', params.class);
   user.set('email', params.email);
   user.set('username', params.email);
   user.set('phone', params.phone);
@@ -25,14 +21,20 @@ Parse.Cloud.define('createEtudiant', async (request) => {
   user.set('type', 'etudiant');
 
   // Enregister l'utilisateur crée
-  await user.save(null, { useMasterKey: true });
+  await user.save();
+
+  // Ajouer l'utilisateur à la relaation
+  const query = new Parse.Query('Classe');
+  const classe = await query.get(params.classe.objectId);
+  const relation = classe.relation('users');
+  relation.add(user);
+  await classe.save(null, { useMasterKey: true });
 
   // Ajouter l'utilisateur crée au role étudiant
   const role = await utils.getRoleByName('etudiant');
   role.getUsers().add(user);
-
-  // Enregister le role
   await role.save(null, { useMasterKey: true });
+
   // Envoyer le mail à l'étudiant crée
   await Parse.User.requestPasswordReset(params.email);
 

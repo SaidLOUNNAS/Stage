@@ -48,7 +48,7 @@ export class CoursPage extends Base implements OnInit {
       modal.onDidDismiss().then(async (result) => {
         if (result.data) {
           this.getUsers();
-          await this.presentToast('USER_CREATED');
+          await this.presentToast('COURS_CREATED');
         }
       });
     } catch (error) {}
@@ -143,7 +143,7 @@ export class CoursPage extends Base implements OnInit {
         try {
           await this.courService.deleteCour(id);
           this.getUsers();
-          await this.presentToast('USER_DELETED');
+          await this.presentToast('COURS_DELETED');
         } catch (error) {
           await this.presentToast(error.message);
         }

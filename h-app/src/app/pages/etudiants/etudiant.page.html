@@ -3,13 +3,10 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Classes</ion-title>
+    <ion-title>Etudiants</ion-title>
     <ion-progress-bar type="indeterminate" *ngIf="isLoading"></ion-progress-bar>
     <ion-buttons slot="end">
-      <ion-button (click)="onLogout()">
-        {{ user?.get('name') }}
-        <ion-icon slot="end" name="log-out"></ion-icon>
-      </ion-button>
+      <ion-button (click)="onLogout()"> {{ user?.get('name') }} <ion-icon slot="end" name="log-out"></ion-icon> </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -20,19 +17,18 @@
 
     <div class="ion-text-end">
       <ion-button fill="clear" (click)="onCreate()" *ngIf="userRole?.getName() === 'admin'">
-        Ajouter
-        <ion-icon slot="end" name="add-circle"></ion-icon>
+        <ion-icon slot="icon-only" name="add-circle"></ion-icon>
       </ion-button>
     </div>
 
     <ion-row>
-      <ion-col *ngFor="let classe of classes" sizeXs="12" sizeSm="6" sizeMd="6" sizeLg="4" sizeXl="4">
+      <ion-col *ngFor="let etudiant of etudiants" sizeXs="12" sizeSm="6" sizeMd="6" sizeLg="4" sizeXl="4">
         <ion-item lines="none">
-          <ion-label>{{ classe.get('name') }}</ion-label>
-          <ion-button class="ion-no-margin" slot="end" fill="clear" (click)="onShowDetails(classe.id)">
+          <ion-label>{{ etudiant.get('name') }}</ion-label>
+          <ion-button class="ion-no-margin" slot="end" fill="clear" (click)="onShowDetails(etudiant.id)">
             <ion-icon slot="icon-only" name="menu"></ion-icon>
           </ion-button>
-          <ion-button class="ion-no-margin" slot="end" fill="clear" (click)="onDelete(classe.id)" *ngIf="userRole?.getName() === 'admin'">
+          <ion-button class="ion-no-margin" slot="end" fill="clear" (click)="onDelete(etudiant.id)" *ngIf="userRole?.getName() === 'admin'">
             <ion-icon slot="icon-only" name="trash"></ion-icon>
           </ion-button>
         </ion-item>

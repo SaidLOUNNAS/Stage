@@ -9,17 +9,17 @@ import { IonicModule } from '@ionic/angular';
 import { CreateModule } from './create/create.module';
 import { DetailModule } from './detail/detail.module';
 
-import { UsersPage } from './users.page';
+import { EtudiantPage } from './etudiant.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: UsersPage,
+    component: EtudiantPage,
   },
 ];
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), IonicModule, CreateModule, DetailModule],
-  declarations: [UsersPage],
+  declarations: [EtudiantPage],
 })
 export class UsersModule {}

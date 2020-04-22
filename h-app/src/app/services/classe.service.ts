@@ -12,27 +12,22 @@ export class ClasseService {
     return Parse.Cloud.run('createClasse', params);
   }
 
-  getClasses(params: any): Promise<any> {
-    const query = new Parse.Query(Parse.User);
+  getClasses(params: any = {}): Promise<any> {
+    const query = new Parse.Query('Classe');
 
-    query.equalTo('type', 'Classe');
-
+    if (params.searchTerm) {
+      query.contains('name', params.searchTerm);
+    }
     return query.find();
   }
 
   getClasse(id: string): Promise<any> {
-    const query = new Parse.Query(Parse.User);
+    const query = new Parse.Query('Classe');
     query.equalTo('objectId', id);
     return query.first();
   }
 
-  getRole(user: any): Promise<any> {
-    const query = new Parse.Query(Parse.Role);
-    query.equalTo('users', user);
-    return query.first();
-  }
-
   deleteClasse(id: string): Promise<any> {
-    return Parse.Cloud.run('deleteUser', { id });
+    return Parse.Cloud.run('deleteClasse', { id });
   }
 }

@@ -6,14 +6,15 @@ import { ModalController } from '@ionic/angular';
   selector: 'app-users-detail',
   templateUrl: './detail.page.html',
   styleUrls: ['./detail.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DetailPage {
-  @Input() user: any;
+  @Input() etudiant: any;
+  @Input() classe: any;
 
   constructor(private modalCtrl: ModalController) {}
 
-  async onClose() {
-    await this.modalCtrl.dismiss();
+  onClose() {
+    this.modalCtrl.dismiss();
   }
 }

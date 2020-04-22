@@ -42,18 +42,18 @@
         </ion-item>
         <div *ngIf="form.controls.dat.hasError('required') && form.controls.dat.dirty">
           <ion-text color="danger">
-            <small>Le nom est requis.</small>
+            <small>La Date de Naissance est requis.</small>
           </ion-text>
         </div>
         <div *ngIf="form.controls.dat.hasError('minlength') && form.controls.dat.dirty">
           <ion-text color="danger">
-            <small>Le nom doit comporter au moins 2 caractères.</small>
+            <small>La Date de Naissance doit comporter au moins 2 caractères.</small>
           </ion-text>
         </div>
 
         <div *ngIf="form.controls.dat.hasError('maxlength') && form.controls.dat.dirty">
           <ion-text color="danger">
-            <small>Le nom doit comporter au maximum 24 caractères.</small>
+            <small>La Date de Naissance doit comporter au maximum 24 caractères.</small>
           </ion-text>
         </div>
       </div>
@@ -107,25 +107,25 @@
         </ion-item>
         <div *ngIf="form.controls.phone.hasError('required') && form.controls.phone.dirty">
           <ion-text color="danger">
-            <small>Le nom est requis.</small>
+            <small>Le numéro de Téléphone est requis.</small>
           </ion-text>
         </div>
         <div *ngIf="form.controls.phone.hasError('minlength') && form.controls.phone.dirty">
           <ion-text color="danger">
-            <small>Le nom doit comporter au moins 2 caractères.</small>
+            <small>Le numéro de Téléphone doit comporter au moins 2 caractères.</small>
           </ion-text>
         </div>
 
         <div *ngIf="form.controls.phone.hasError('maxlength') && form.controls.phone.dirty">
           <ion-text color="danger">
-            <small>Le nom doit comporter au maximum 24 caractères.</small>
+            <small>Le numéro de Téléphone doit comporter au maximum 24 caractères.</small>
           </ion-text>
         </div>
       </div>
       <!-- le mot de passe -->
       <div class="ion-margin-vertical">
         <ion-item lines="none">
-          <ion-label position="floating">mot de passe <ion-text color="danger">*</ion-text> </ion-label>
+          <ion-label position="floating">Mot de passe <ion-text color="danger">*</ion-text> </ion-label>
           <ion-input type="password" formControlName="password" (keyup.enter)="onSubmit()"></ion-input>
         </ion-item>
 

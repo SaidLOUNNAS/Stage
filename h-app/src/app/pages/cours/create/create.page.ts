@@ -4,7 +4,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { Base } from '../../base/base';
 
-import { CustomValidators } from '../../../utils/CustomValidators';
+// import { CustomValidators } from '../../../utils/CustomValidators';
 
 // import { Patterns } from '../../../utils/Patterns';
 
@@ -45,17 +45,12 @@ export class CreatePage extends Base implements OnInit {
   }
 
   private setupForm() {
-    this.form = this.fb.group(
-      {
-        name: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
-        Class: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
-        formateur: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
-        dat: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
-        duree: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
-      },
-      {
-        validator: CustomValidators.passwordMatchValidator,
-      }
-    );
+    this.form = this.fb.group({
+      name: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
+      Class: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
+      formateur: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
+      dat: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
+      duree: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
+    });
   }
 }

@@ -1,6 +1,6 @@
 const utils = require('./utils');
 
-Parse.Cloud.define('createEtudiant', async (request) => {
+Parse.Cloud.define('createClasse', async (request) => {
   const params = request.params;
   const cuser = request.user;
 
@@ -11,25 +11,28 @@ Parse.Cloud.define('createEtudiant', async (request) => {
     throw 'NOT_AUTHORIZED';
   }
 
-  // Créer un utilisateur
+  // créer une classe
+  const Classe = Parse.Object.extend('Classe');
+  const classe = new Classe();
 
-  const user = new Parse.User();
-  user.set('name', params.name);
-  user.set('etudiant', params.etudiant);
-  user.set('formateur', params.formateur);
-  user.set('username', params.email);
-  user.set('type', 'classe');
+  classe.set('name', params.name);
 
-  // Enregister l'utilisateur crée
-  await user.save(null, { useMasterKey: true });
+  return classe.save();
+});
 
-  // Ajouter l'utilisateur crée au role étudiant
-  const role = await utils.getRoleByName('classe');
-  role.getUsers().add(user);
+Parse.Cloud.define('deleteClasse', async (request) => {
+  const params = request.params;
+  const cuser = request.user;
 
-  // Enregister le role
-  await role.save(null, { useMasterKey: true });
-  // Envoyer le mail à l'étudiant crée
+  const cuserRole = await utils.getRoleByUser(cuser);
 
-  return 'USER_CREATED';
+  if (!cuserRole || cuserRole.getName() !== 'admin') {
+    throw 'NOT_AUTHORIZED';
+  }
+
+  const query = new Parse.Query('Classe');
+
+  const classe = await query.get(params.id);
+
+  return classe.destroy();
 });

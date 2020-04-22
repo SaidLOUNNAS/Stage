@@ -3,17 +3,17 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-users-detail',
+  selector: 'app-classes-detail',
   templateUrl: './detail.page.html',
   styleUrls: ['./detail.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailPage {
-  @Input() user: any;
+  @Input() classe: any;
+  @Input() users: any;
 
   constructor(private modalCtrl: ModalController) {}
 
-  async onClose() {
-    await this.modalCtrl.dismiss();
+  onClose() {
+    this.modalCtrl.dismiss();
   }
 }

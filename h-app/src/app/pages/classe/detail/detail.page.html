@@ -1,6 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>détail</ion-title>
+    <ion-title>détails</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="onClose()">
         <ion-icon slot="icon-only" name="close"></ion-icon>
@@ -10,42 +10,35 @@
 </ion-header>
 
 <ion-content>
-  <!-- pour le nom de la classe -->
   <div class="ion-padding">
     <div class="ion-margin-vertical">
       <ion-item lines="none">
         <ion-label position="stacked">Nom de la classe</ion-label>
-        <ion-input type="text" [value]="user.get('name')" readonly></ion-input>
+        <ion-input type="text" [value]="classe.get('name')" readonly></ion-input>
       </ion-item>
     </div>
-    <!-- Les formateur ajoutés -->
     <div class="ion-margin-vertical">
       <ion-item lines="none">
-        <ion-label position="stacked">Formateur</ion-label>
-        <ion-input type="text" [value]="user.get('formateur')" readonly></ion-input>
-      </ion-item>
-    </div>
-    <!-- Les étudaiants ajouté  -->
-
-    <div class="ion-margin-vertical">
-      <ion-item lines="none">
-        <ion-label position="stacked">La liste des étudaiants ajoutés</ion-label>
-        <ion-input type="text" [value]="user.get('etudiant')" readonly></ion-input>
+        <ion-label position="stacked">créer à </ion-label>
+        <ion-input type="text" [value]="classe.get('createdAt') | date: 'medium'" readonly></ion-input>
       </ion-item>
     </div>
 
     <div class="ion-margin-vertical">
       <ion-item lines="none">
-        <ion-label position="stacked">Créer à</ion-label>
-        <ion-input type="text" [value]="user.get('createdAt') | date: 'medium'" readonly></ion-input>
+        <ion-label position="stacked">Mise à jour </ion-label>
+        <ion-input type="text" [value]="classe.get('updatedAt') | date: 'medium'" readonly></ion-input>
       </ion-item>
     </div>
 
-    <div class="ion-margin-vertical">
-      <ion-item lines="none">
-        <ion-label position="stacked">Mise à jour</ion-label>
-        <ion-input type="text" [value]="user.get('updatedAt') | date: 'medium'" readonly></ion-input>
+    <ion-item-divider>
+      <ion-label>Liste des utilisaateurs</ion-label>
+    </ion-item-divider>
+
+    <ion-list>
+      <ion-item *ngFor="let user of users">
+        <ion-label>{{user.get('name')}}</ion-label>
       </ion-item>
-    </div>
+    </ion-list>
   </div>
 </ion-content>

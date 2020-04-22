@@ -7,22 +7,26 @@ import { ModalController, ToastController, AlertController, LoadingController } 
 import { CreatePage } from './create/create.page';
 import { DetailPage } from './detail/detail.page';
 
-import { AuthService } from '../../services/auth.service';
-import { ClasseService } from '../../services/classe.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { EtudiantService } from '../../services/etudiant.service';
+import { ClasseService } from 'src/app/services/classe.service';
 
 @Component({
-  selector: 'app-classes',
-  templateUrl: './classes.page.html',
-  styleUrls: ['./classes.page.scss'],
+  selector: 'app-etudiants',
+  templateUrl: './etudiant.page.html',
+  styleUrls: ['./etudiant.page.scss'],
 })
-export class ClassesPage implements OnInit {
+export class EtudiantPage implements OnInit {
   user: any;
   userRole: any;
-  classes: any[] = [];
-  isLoading: boolean = false;
+
+  etudiants: any[] = [];
+
+  isLoading = false;
 
   constructor(
     private authService: AuthService,
+    private etudiantService: EtudiantService,
     private classeService: ClasseService,
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
@@ -34,25 +38,23 @@ export class ClassesPage implements OnInit {
   async ngOnInit() {
     this.user = this.authService.getCurrentUser();
     this.userRole = await this.authService.getRole(this.user);
-    this.getClasses();
+    this.getEtudiants();
   }
 
   async onCreate() {
     try {
-      const modal = await this.modalCtrl.create({ component: CreatePage, backdropDismiss: false });
+      const classes = await this.classeService.getClasses();
+      const modal = await this.modalCtrl.create({ component: CreatePage, componentProps: { classes }, backdropDismiss: false });
       await modal.present();
 
       modal.onDidDismiss().then(async (result) => {
         if (result.data) {
-          this.getClasses();
-          const toast = await this.toastCtrl.create({ message: 'CLASSE_CREATED', duration: 2000 });
+          this.getEtudiants();
+          const toast = await this.toastCtrl.create({ message: 'ETUDIANT_CREATED', duration: 2000 });
           toast.present();
         }
       });
-    } catch (error) {
-      const toast = await this.toastCtrl.create({ message: error.message, duration: 2000 });
-      toast.present();
-    }
+    } catch (error) {}
   }
 
   async onShowDetails(id: string) {
@@ -60,11 +62,11 @@ export class ClassesPage implements OnInit {
     await loading.present();
 
     try {
-      const classe = await this.classeService.getClasse(id);
-      const query = classe.get('users').query();
-      const users = await query.find();
+      const etudiant = await this.etudiantService.getEtudiant(id);
 
-      const modal = await this.modalCtrl.create({ component: DetailPage, componentProps: { classe, users }, backdropDismiss: false });
+      const classe = await this.etudiantService.getClasseByEtudiant(etudiant);
+
+      const modal = await this.modalCtrl.create({ component: DetailPage, componentProps: { etudiant, classe }, backdropDismiss: false });
       this.loadingCtrl.dismiss();
       await modal.present();
     } catch (error) {
@@ -75,8 +77,8 @@ export class ClassesPage implements OnInit {
 
   async onDelete(id: string) {
     const alert = await this.alertCtrl.create({
-      header: 'Delete classe',
-      message: 'Are you sure delete this classe ?',
+      header: 'Delete user',
+      message: 'Are you sure delete this user ?',
       buttons: [
         {
           text: 'No',
@@ -93,35 +95,45 @@ export class ClassesPage implements OnInit {
     alert.onDidDismiss().then(async (result) => {
       if (result.role === 'ok') {
         try {
-          await this.classeService.deleteClasse(id);
-          this.getClasses();
-          const toast = await this.toastCtrl.create({ message: 'CLASSE_DELETED', duration: 2000 });
-          toast.present();
+          await this.etudiantService.deleteEtudiant(id);
+          this.getEtudiants();
+          await this.presentToast('USER_DELETED');
         } catch (error) {
-          const toast = await this.toastCtrl.create({ message: error.message, duration: 2000 });
-          toast.present();
+          await this.presentToast(error.message);
         }
       }
     });
   }
 
   async onSearch(event: any) {
-    this.getClasses({ searchTerm: event.detail.value.trim() });
+    this.params = { ...this.params, searchTerm: event.detail.value.trim().toLowerCase() };
+    this.getEtudiants();
+  }
+
+  async onRefresh() {
+    this.params = { searchTerm: '', order: 'updatedAtDesc' };
+    await this.getEtudiants();
+    await this.ionRefresher.complete();
+    this.isSortedBSubject$.next(false);
   }
 
   async onLogout() {
     await this.authService.logout();
-    this.router.navigateByUrl('/login');
+    await this.router.navigateByUrl('/login');
   }
 
-  private async getClasses(params: any = {}) {
+  trackByFn(index: number, user: any) {
+    return user ? user.id : index;
+  }
+
+  private async getEtudiants(params: any = {}) {
     try {
       this.isLoading = true;
-      this.classes = await this.classeService.getClasses(params);
+      this.etudiants = await this.etudiantService.getEtudiants(params);
       this.isLoading = false;
     } catch (error) {
       this.isLoading = false;
-      const toast = await this.toastCtrl.create({ message: error.message, duration: 2000 });
+      const toast = await this.toastCtrl.create({ message: error, duration: 2000 });
       toast.present();
     }
   }

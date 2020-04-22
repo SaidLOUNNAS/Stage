@@ -11,82 +11,22 @@
 
 <ion-content>
   <div class="ion-padding">
-    <!-- pour le nom de la classe -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
       <div class="ion-margin-vertical">
         <ion-item lines="none">
-          <ion-label position="floating">Nom de la classe<ion-text color="danger">*</ion-text> </ion-label>
+          <ion-label position="floating">Nom de la classe<ion-text color="danger"> *</ion-text> </ion-label>
           <ion-input type="text" formControlName="name" (keyup.enter)="onSubmit()"></ion-input>
         </ion-item>
         <div *ngIf="form.controls.name.hasError('required') && form.controls.name.dirty">
           <ion-text color="danger">
-            <small>Le nom est requis.</small>
-          </ion-text>
-        </div>
-        <div *ngIf="form.controls.name.hasError('minlength') && form.controls.name.dirty">
-          <ion-text color="danger">
-            <small>Le nom doit comporter au moins 2 caractères.</small>
-          </ion-text>
-        </div>
-
-        <div *ngIf="form.controls.name.hasError('maxlength') && form.controls.name.dirty">
-          <ion-text color="danger">
-            <small>Le nom doit comporter au maximum 24 caractères.</small>
-          </ion-text>
-        </div>
-      </div>
-      <!-- pour le formateur -->
-      <div class="ion-margin-vertical">
-        <ion-item lines="none">
-          <ion-label position="floating">Formateur<ion-text color="danger">*</ion-text> </ion-label>
-          <ion-input type="text" formControlName="formateur" (keyup.enter)="onSubmit()"></ion-input>
-        </ion-item>
-        <div *ngIf="form.controls.formateur.hasError('required') && form.controls.formateur.dirty">
-          <ion-text color="danger">
-            <small>Le nom est requis.</small>
-          </ion-text>
-        </div>
-        <div *ngIf="form.controls.formateur.hasError('minlength') && form.controls.formateur.dirty">
-          <ion-text color="danger">
-            <small>Le nom doit comporter au moins 2 caractères.</small>
-          </ion-text>
-        </div>
-
-        <div *ngIf="form.controls.formateur.hasError('maxlength') && form.controls.formateur.dirty">
-          <ion-text color="danger">
-            <small>Le nom doit comporter au maximum 24 caractères.</small>
-          </ion-text>
-        </div>
-      </div>
-      <!-- La liste des etudiants ajoutés -->
-      <div class="ion-margin-vertical">
-        <ion-item lines="none">
-          <ion-label position="floating"
-            >La liste des etudiants ajoutés<ion-text color="danger">*</ion-text>
-          </ion-label>
-          <ion-input type="text" formControlName="etudiant" (keyup.enter)="onSubmit()"></ion-input>
-        </ion-item>
-        <div *ngIf="form.controls.etudiant.hasError('required') && form.controls.etudiant.dirty">
-          <ion-text color="danger">
-            <small>La date est requis.</small>
-          </ion-text>
-        </div>
-        <div *ngIf="form.controls.etudiant.hasError('minlength') && form.controls.etudiant.dirty">
-          <ion-text color="danger">
-            <small>La date doit comporter au moins 2 caractères.</small>
-          </ion-text>
-        </div>
-
-        <div *ngIf="form.controls.etudiant.hasError('maxlength') && form.controls.etudiant.dirty">
-          <ion-text color="danger">
-            <small>La date doit comporter au maximum 24 caractères.</small>
+            <small>Le nom de la classe est requis.</small>
           </ion-text>
         </div>
       </div>
 
       <div class="ion-text-center">
-        <ion-button type="submit" shape="round" [disabled]="(isLoading$ | async) || form.invalid">
-          <ion-spinner *ngIf="isLoading$ | async"></ion-spinner>
+        <ion-button type="submit" shape="round" [disabled]="isLoading || form.invalid">
+          <ion-spinner *ngIf="isLoading"></ion-spinner>
           Enregistrer
         </ion-button>
       </div>

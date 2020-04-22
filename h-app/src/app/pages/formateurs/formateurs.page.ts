@@ -48,7 +48,7 @@ export class FormateursPage extends Base implements OnInit {
       modal.onDidDismiss().then(async (result) => {
         if (result.data) {
           this.getUsers();
-          await this.presentToast('USER_CREATED');
+          await this.presentToast('FORMTEUR_CREATED');
         }
       });
     } catch (error) {}

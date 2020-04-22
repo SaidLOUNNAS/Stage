@@ -12,7 +12,6 @@ export class AuthService {
     return Parse.User.current();
   }
 
-
   login(email: string, password: string): Promise<any> {
     return Parse.User.logIn(email, password);
   }
@@ -23,5 +22,11 @@ export class AuthService {
 
   recoverPassword(email: string): Promise<any> {
     return Parse.User.requestPasswordReset(email);
+  }
+
+  getRole(user: any): Promise<any> {
+    const query = new Parse.Query(Parse.Role);
+    query.equalTo('users', user);
+    return query.first();
   }
 }

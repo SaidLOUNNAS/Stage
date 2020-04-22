@@ -5,10 +5,10 @@ import * as Parse from 'parse';
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class EtudiantService {
   constructor() {}
 
-  createEtudiant(params: any): Promise<any> {
+  async createEtudiant(params: any): Promise<any> {
     return Parse.Cloud.run('createEtudiant', params);
   }
 
@@ -26,13 +26,13 @@ export class UserService {
     return query.first();
   }
 
-  getRole(user: any): Promise<any> {
-    const query = new Parse.Query(Parse.Role);
-    query.equalTo('users', user);
-    return query.first();
-  }
-
   deleteEtudiant(id: string): Promise<any> {
     return Parse.Cloud.run('deleteUser', { id });
+  }
+
+  getClasseByEtudiant(etudiant: any) {
+    const query = new Parse.Query('Classe');
+    query.equalTo('users', etudiant);
+    return query.first();
   }
 }
