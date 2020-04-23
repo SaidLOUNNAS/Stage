@@ -28,12 +28,6 @@ export class FormateurService {
     return query.first();
   }
 
-  getClasseByFormateur(formateur: any) {
-    const query = new Parse.Query('Classe');
-    query.equalTo('users', formateur);
-    return query.first();
-  }
-
   deleteFormateur(id: string): Promise<any> {
     return Parse.Cloud.run('deleteFormateur', { id });
   }

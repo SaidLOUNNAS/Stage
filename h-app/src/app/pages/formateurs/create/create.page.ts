@@ -26,7 +26,7 @@ export class CreatePage implements OnInit {
     if (this.form.valid) {
       try {
         this.isLoading = true;
-        await this.userService.createFormateur({ ...this.form.value, classe: this.form.value.classe.toPointer() });
+        await this.userService.createFormateur(this.form.value);
         this.isLoading = false;
         this.modalCtrl.dismiss(true);
       } catch (error) {
@@ -48,17 +48,12 @@ export class CreatePage implements OnInit {
     await this.modalCtrl.dismiss();
   }
 
-  compareFn = (o1: any, o2: any) => {
-    return o1 && o2 ? o1.id === o2.id : o1 === o2;
-  };
-
   private setupForm() {
     this.form = this.fb.group(
       {
         name: [null, Validators.compose([Validators.required])],
         dat: [null, Validators.compose([Validators.required])],
         phone: [null, Validators.compose([Validators.required])],
-        class: [null],
         email: [null, Validators.compose([Validators.required, Validators.email])],
         password: [null, Validators.compose([Validators.required, Validators.minLength(8)])],
         confirmPassword: [null],

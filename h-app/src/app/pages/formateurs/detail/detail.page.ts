@@ -10,7 +10,6 @@ import { ModalController } from '@ionic/angular';
 })
 export class DetailPage {
   @Input() user: any;
-  @Input() classe: any;
 
   constructor(private modalCtrl: ModalController) {}
 

@@ -37,14 +37,6 @@
       </div>
       <div class="ion-margin-vertical">
         <ion-item lines="none">
-          <ion-label position="floating">Classe</ion-label>
-          <ion-select formControlName="classe" placeholder="selectionner une classe" [compareWith]="compareFn">
-            <ion-select-option *ngFor="let classe of classes" [value]="classe">{{classe.get('name')}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </div>
-      <div class="ion-margin-vertical">
-        <ion-item lines="none">
           <ion-label position="floating">Mail <ion-text color="danger">*</ion-text> </ion-label>
           <ion-input type="email" formControlName="email" (keyup.enter)="onSubmit()"></ion-input>
         </ion-item>

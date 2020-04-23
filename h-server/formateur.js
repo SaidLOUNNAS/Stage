@@ -22,17 +22,12 @@ Parse.Cloud.define('createFormateur', async (request) => {
   user.set('type', 'formateur');
 
   // Enregister l'utilisateur crée
-  await user.save();
-  // Ajouer l'utilisateur à la relation
-  const query = new Parse.Query('Classe');
-  const classe = await query.get(params.classe.objectId);
-  const relation = classe.relation('users');
-  relation.add(user);
-  await classe.save(null, { useMasterKey: true });
-
+  await user.save(null, { useMasterKey: true });
   // Ajouter l'utilisateur crée au role formateur
   const role = await utils.getRoleByName('formateur');
   role.getUsers().add(user);
+
+  // Enregister le role
   await role.save(null, { useMasterKey: true });
 
   // Envoyer le mail au formateur crée
@@ -40,6 +35,7 @@ Parse.Cloud.define('createFormateur', async (request) => {
 
   return 'Formateur_crée';
 });
+
 Parse.Cloud.define('deleteFormateur', async (request) => {
   const params = request.params;
   const cuser = request.user;

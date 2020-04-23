@@ -30,18 +30,7 @@
         <ion-input type="text" [value]="classe.get('updatedAt') | date: 'medium'" readonly></ion-input>
       </ion-item>
     </div>
-
-    <ion-item>
-      <ion-label>Formateur : </ion-label>
-    </ion-item>
-    <ion-list>
-      <ion-item *ngFor="let user of users">
-        <ion-label> {{user.get('name')}} </ion-label>
-        <ion-label> Tel : {{user.get('phone')}} </ion-label>
-      </ion-item>
-    </ion-list>
-
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>Liste des utilisateurs : </ion-label>
     </ion-item>
 

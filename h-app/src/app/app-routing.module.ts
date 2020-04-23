@@ -27,11 +27,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/classe/classes.module').then((m) => m.ClassesModule),
   },
-  {
-    path: 'cours',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/cours/cours.module').then((m) => m.CoursModule),
-  },
+  // {
+  //   path: 'cours',
+  //   canActivate: [AuthGuard],
+  //   loadChildren: () => import('./pages/cours/cours.module').then((m) => m.CoursModule),
+  // },
 
   {
     path: 'profile',

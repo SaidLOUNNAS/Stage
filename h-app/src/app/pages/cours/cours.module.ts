@@ -6,9 +6,6 @@
 
 // import { IonicModule } from '@ionic/angular';
 
-// import { CreateModule } from './create/create.module';
-// import { DetailModule } from './detail/detail.module';
-
 // import { CoursPage } from './cours.page';
 
 // const routes: Routes = [
@@ -19,7 +16,7 @@
 // ];
 
 // @NgModule({
-//   imports: [CommonModule, RouterModule.forChild(routes), IonicModule, CreateModule, DetailModule],
+//   imports: [CommonModule, RouterModule.forChild(routes), IonicModule],
 //   declarations: [CoursPage],
 // })
 // export class CoursModule {}

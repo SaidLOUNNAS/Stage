@@ -8,7 +8,6 @@ import { DetailPage } from './detail/detail.page';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { FormateurService } from '../../services/formateur.service';
-import { ClasseService } from 'src/app/services/classe.service';
 
 @Component({
   selector: 'app-formateurs',
@@ -26,7 +25,6 @@ export class FormateursPage implements OnInit {
   constructor(
     private authService: AuthService,
     private formateurService: FormateurService,
-    private classeService: ClasseService,
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
     private router: Router,
@@ -42,8 +40,7 @@ export class FormateursPage implements OnInit {
 
   async onCreate() {
     try {
-      const classes = await this.classeService.getClasses();
-      const modal = await this.modalCtrl.create({ component: CreatePage, componentProps: { classes }, backdropDismiss: false });
+      const modal = await this.modalCtrl.create({ component: CreatePage, backdropDismiss: false });
       await modal.present();
 
       modal.onDidDismiss().then(async (result) => {
@@ -66,9 +63,7 @@ export class FormateursPage implements OnInit {
     try {
       const formateur = await this.formateurService.getFormateur(id);
 
-      const classe = await this.formateurService.getClasseByFormateur(formateur);
-
-      const modal = await this.modalCtrl.create({ component: DetailPage, componentProps: { formateur, classe }, backdropDismiss: false });
+      const modal = await this.modalCtrl.create({ component: DetailPage, componentProps: { formateur }, backdropDismiss: false });
       this.loadingCtrl.dismiss();
       await modal.present();
     } catch (error) {
