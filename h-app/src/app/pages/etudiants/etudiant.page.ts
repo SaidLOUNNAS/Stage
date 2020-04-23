@@ -22,7 +22,7 @@ export class EtudiantPage implements OnInit {
 
   etudiants: any[] = [];
 
-  isLoading = false;
+  isLoading: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -50,15 +50,18 @@ export class EtudiantPage implements OnInit {
       modal.onDidDismiss().then(async (result) => {
         if (result.data) {
           this.getEtudiants();
-          const toast = await this.toastCtrl.create({ message: 'ETUDIANT_CREATED', duration: 2000 });
+          const toast = await this.toastCtrl.create({ message: 'Etudiant_créé', duration: 2000 });
           toast.present();
         }
       });
-    } catch (error) {}
+    } catch (error) {
+      const toast = await this.toastCtrl.create({ message: error.message, duration: 2000 });
+      toast.present();
+    }
   }
 
   async onShowDetails(id: string) {
-    const loading = await this.loadingCtrl.create({ message: 'Please wait...' });
+    const loading = await this.loadingCtrl.create({ message: " Attendez s'il vous plaît..." });
     await loading.present();
 
     try {
@@ -70,6 +73,7 @@ export class EtudiantPage implements OnInit {
       this.loadingCtrl.dismiss();
       await modal.present();
     } catch (error) {
+      console.log(error);
       const toast = await this.toastCtrl.create({ message: error.message, duration: 2000 });
       toast.present();
     }
@@ -77,15 +81,15 @@ export class EtudiantPage implements OnInit {
 
   async onDelete(id: string) {
     const alert = await this.alertCtrl.create({
-      header: 'Delete user',
-      message: 'Are you sure delete this user ?',
+      header: "Supprimer l'étudiant",
+      message: 'Êtes-vous sûr de supprimer cet étudiant ?',
       buttons: [
         {
-          text: 'No',
-          role: 'cancel',
+          text: 'Non',
+          role: 'Annuler',
         },
         {
-          text: 'Yes',
+          text: 'Oui',
           role: 'ok',
         },
       ],
@@ -97,33 +101,23 @@ export class EtudiantPage implements OnInit {
         try {
           await this.etudiantService.deleteEtudiant(id);
           this.getEtudiants();
-          await this.presentToast('USER_DELETED');
+          const toast = await this.toastCtrl.create({ message: 'Etudiant supprimé', duration: 2000 });
+          toast.present();
         } catch (error) {
-          await this.presentToast(error.message);
+          const toast = await this.toastCtrl.create({ message: error.message, duration: 2000 });
+          toast.present();
         }
       }
     });
   }
 
   async onSearch(event: any) {
-    this.params = { ...this.params, searchTerm: event.detail.value.trim().toLowerCase() };
-    this.getEtudiants();
-  }
-
-  async onRefresh() {
-    this.params = { searchTerm: '', order: 'updatedAtDesc' };
-    await this.getEtudiants();
-    await this.ionRefresher.complete();
-    this.isSortedBSubject$.next(false);
+    this.getEtudiants({ searchTerm: event.detail.value.trim() });
   }
 
   async onLogout() {
     await this.authService.logout();
     await this.router.navigateByUrl('/login');
-  }
-
-  trackByFn(index: number, user: any) {
-    return user ? user.id : index;
   }
 
   private async getEtudiants(params: any = {}) {

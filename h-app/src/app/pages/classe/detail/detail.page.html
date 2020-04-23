@@ -31,13 +31,24 @@
       </ion-item>
     </div>
 
-    <ion-item-divider>
-      <ion-label>Liste des utilisaateurs</ion-label>
-    </ion-item-divider>
+    <ion-item>
+      <ion-label>Formateur : </ion-label>
+    </ion-item>
+    <ion-list>
+      <ion-item *ngFor="let user of users">
+        <ion-label> {{user.get('name')}} </ion-label>
+        <ion-label> Tel : {{user.get('phone')}} </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-item>
+      <ion-label>Liste des utilisateurs : </ion-label>
+    </ion-item>
 
     <ion-list>
       <ion-item *ngFor="let user of users">
-        <ion-label>{{user.get('name')}}</ion-label>
+        <ion-label> {{user.get('name')}} </ion-label>
+        <ion-label> Tel : {{user.get('phone')}} </ion-label>
       </ion-item>
     </ion-list>
   </div>

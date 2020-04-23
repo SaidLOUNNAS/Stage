@@ -13,26 +13,28 @@ export class FormateurService {
   }
 
   getFormateurs(params: any): Promise<any> {
-    const query = new Parse.Query(Parse.User);
+    const query = new Parse.Query('User');
 
     query.equalTo('type', 'formateur');
-
+    if (params.searchTerm) {
+      query.contains('name', params.searchTerm);
+    }
     return query.find();
   }
 
   getFormateur(id: string): Promise<any> {
-    const query = new Parse.Query(Parse.User);
+    const query = new Parse.Query('user');
     query.equalTo('objectId', id);
     return query.first();
   }
 
-  getRole(user: any): Promise<any> {
-    const query = new Parse.Query(Parse.Role);
-    query.equalTo('users', user);
+  getClasseByFormateur(formateur: any) {
+    const query = new Parse.Query('Classe');
+    query.equalTo('users', formateur);
     return query.first();
   }
 
   deleteFormateur(id: string): Promise<any> {
-    return Parse.Cloud.run('deleteUser', { id });
+    return Parse.Cloud.run('deleteFormateur', { id });
   }
 }

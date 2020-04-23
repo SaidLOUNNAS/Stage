@@ -6,8 +6,8 @@
     <ion-title>Profil</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="onLogout()">
-        {{user.get('name')}}
-        <ion-icon slot="end" name="log-out"></ion-icon>
+        <ion-icon slot="start" name="log-out"></ion-icon>
+        Déconnexion
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -32,8 +32,8 @@
 
       <div class="ion-margin-vertical">
         <ion-item lines="none">
-          <ion-label position="stacked">rien pour linstant</ion-label>
-          <ion-input type="text" [value]="user.get('status')" readonly></ion-input>
+          <ion-label position="stacked">Numéro de Téléphone</ion-label>
+          <ion-input type="text" [value]="user.get('tel')" readonly></ion-input>
         </ion-item>
       </div>
 

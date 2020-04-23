@@ -4,8 +4,6 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { CustomValidators } from '../../utils/CustomValidators';
 
-import { Patterns } from '../../utils/Patterns';
-
 import { Base } from '../base/base';
 
 import { AuthService } from '../../services/auth.service';
@@ -14,7 +12,7 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-change-password',
   templateUrl: './change-password.page.html',
   styleUrls: ['./change-password.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChangePasswordPage extends Base implements OnInit {
   public form: FormGroup;
@@ -62,11 +60,11 @@ export class ChangePasswordPage extends Base implements OnInit {
     this.form = this.fb.group(
       {
         oldPassword: [null, Validators.compose([Validators.required])],
-        password: [null, Validators.compose([Validators.required, CustomValidators.patternValidator(Patterns.password, { password: true })])],
-        confirmPassword: [null]
+        password: [null, Validators.compose([Validators.required, Validators.minLength(8)])],
+        confirmPassword: [null],
       },
       {
-        validator: CustomValidators.passwordMatchValidator
+        validator: CustomValidators.passwordMatchValidator,
       }
     );
   }

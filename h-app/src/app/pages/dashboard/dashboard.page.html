@@ -7,16 +7,15 @@
 
     <ion-buttons slot="end">
       <ion-button (click)="onLogout()">
-        <ion-icon slot="end" name="log-out"></ion-icon>
-        {{cuser?.get('name')}}
+        <ion-icon slot="start" name="log-out"></ion-icon>
+        Déconnexion
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <div class="ion-padding">
-    <ion-calendar [(ngModel)]="dateRange" [options]="optionsRange" [type]="type" [format]="'YYYY-MM-DD'">
-    </ion-calendar>
+    <ion-calendar [(ngModel)]="dateRange" [options]="optionsRange" [type]="type" [format]="'YYYY-MM-DD'"> </ion-calendar>
   </div>
 </ion-content>
 

@@ -1,27 +1,22 @@
-import { Component, OnInit, ChangeDetectionStrategy, Injector } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
-import { Base } from '../../base/base';
-
 import { CustomValidators } from '../../../utils/CustomValidators';
-
-import { Patterns } from '../../../utils/Patterns';
-
+import { ModalController, ToastController } from '@ionic/angular';
 import { FormateurService } from '../../../services/formateur.service';
 
 @Component({
   selector: 'app-formateur-create',
   templateUrl: './create.page.html',
   styleUrls: ['./create.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreatePage extends Base implements OnInit {
+export class CreatePage implements OnInit {
+  @Input() classes: any = [];
   form: FormGroup;
 
-  constructor(injector: Injector, private fb: FormBuilder, private formateurService: FormateurService) {
-    super(injector);
-  }
+  isLoading: boolean = false;
+  constructor(private fb: FormBuilder, private userService: FormateurService, private modalCtrl: ModalController, private toastCtrl: ToastController) {}
 
   ngOnInit() {
     this.setupForm();
@@ -30,47 +25,42 @@ export class CreatePage extends Base implements OnInit {
   async onSubmit() {
     if (this.form.valid) {
       try {
-        this.isLoadingBSubject$.next(true);
-        await this.formateurService.createFormateur(this.form.value);
-        this.isLoadingBSubject$.next(false);
-        await this.modalCtrl.dismiss(true);
+        this.isLoading = true;
+        await this.userService.createFormateur({ ...this.form.value, classe: this.form.value.classe.toPointer() });
+        this.isLoading = false;
+        this.modalCtrl.dismiss(true);
       } catch (error) {
-        this.isLoadingBSubject$.next(false);
+        this.isLoading = false;
         if (error.code === 202 || error.code === 203) {
-          await this.presentToast('EMAIL_TAKEN');
+          const toast = await this.toastCtrl.create({ message: 'Adresse email deja utilisé', duration: 2000 });
+          toast.present();
         } else if (error.code === 125) {
-          await this.presentToast('EMAIL_INVALID');
-        } else if (error.code === 141) {
-          await this.presentToast(error.message);
+          const toast = await this.toastCtrl.create({ message: "Adresse email n'est pas valide", duration: 2000 });
+          toast.present();
         } else {
-          await this.presentToast('ERROR_NETWORK');
+          const toast = await this.toastCtrl.create({ message: error.message, duration: 2000 });
+          toast.present();
         }
       }
     }
   }
-
   async onClose() {
     await this.modalCtrl.dismiss();
   }
 
+  compareFn = (o1: any, o2: any) => {
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  };
+
   private setupForm() {
     this.form = this.fb.group(
       {
-        name: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
-        dat: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
-        phone: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
-        class: [null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(24)])],
-        email: [
-          null,
-          Validators.compose([Validators.required, CustomValidators.patternValidator(Patterns.email, { email: true })]),
-        ],
-        password: [
-          null,
-          Validators.compose([
-            Validators.required,
-            CustomValidators.patternValidator(Patterns.password, { password: true }),
-          ]),
-        ],
+        name: [null, Validators.compose([Validators.required])],
+        dat: [null, Validators.compose([Validators.required])],
+        phone: [null, Validators.compose([Validators.required])],
+        class: [null],
+        email: [null, Validators.compose([Validators.required, Validators.email])],
+        password: [null, Validators.compose([Validators.required, Validators.minLength(8)])],
         confirmPassword: [null],
       },
       {
@@ -79,5 +69,3 @@ export class CreatePage extends Base implements OnInit {
     );
   }
 }
-
-//f

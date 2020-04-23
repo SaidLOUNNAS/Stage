@@ -10,6 +10,6 @@ import { ChangePasswordPage } from './change-password.page';
 
 @NgModule({
   declarations: [ChangePasswordPage],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule]
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule],
 })
 export class ChangePasswordModule {}

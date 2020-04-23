@@ -1,137 +1,94 @@
-import { Component, OnInit, ChangeDetectionStrategy, Injector, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { IonRefresher } from '@ionic/angular';
+import { ModalController, ToastController, AlertController, LoadingController } from '@ionic/angular';
 
-import { BehaviorSubject, Observable } from 'rxjs';
-
-import { Base } from '../base/base';
 import { CreatePage } from './create/create.page';
-
 import { DetailPage } from './detail/detail.page';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { FormateurService } from '../../services/formateur.service';
+import { ClasseService } from 'src/app/services/classe.service';
 
 @Component({
   selector: 'app-formateurs',
   templateUrl: './formateurs.page.html',
   styleUrls: ['./formateurs.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormateursPage extends Base implements OnInit {
-  @ViewChild(IonRefresher, { static: false }) ionRefresher: IonRefresher;
-
+export class FormateursPage implements OnInit {
   user: any;
   userRole: any;
 
-  params: any = { searchTerm: '', order: 'updatedAtDesc' };
+  formateurs: any[] = [];
 
-  isSortedBSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  isSorted$: Observable<boolean> = this.isSortedBSubject$.asObservable();
+  isLoading: boolean = false;
 
-  constructor(injector: Injector, private authService: AuthService, private formateurService: FormateurService) {
-    super(injector);
-  }
+  constructor(
+    private authService: AuthService,
+    private formateurService: FormateurService,
+    private classeService: ClasseService,
+    private modalCtrl: ModalController,
+    private toastCtrl: ToastController,
+    private router: Router,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController
+  ) {}
 
   async ngOnInit() {
     this.user = this.authService.getCurrentUser();
-    this.userRole = await this.formateurService.getRole(this.user);
-    this.getUsers();
+    this.userRole = await this.authService.getRole(this.user);
+    this.getFormateurs();
   }
 
   async onCreate() {
     try {
-      const modal = await this.modalCtrl.create({ component: CreatePage, backdropDismiss: false });
-
+      const classes = await this.classeService.getClasses();
+      const modal = await this.modalCtrl.create({ component: CreatePage, componentProps: { classes }, backdropDismiss: false });
       await modal.present();
 
       modal.onDidDismiss().then(async (result) => {
         if (result.data) {
-          this.getUsers();
-          await this.presentToast('FORMTEUR_CREATED');
+          this.getFormateurs();
+          const toast = await this.toastCtrl.create({ message: 'Formateur_créé', duration: 2000 });
+          toast.present();
         }
       });
-    } catch (error) {}
+    } catch (error) {
+      const toast = await this.toastCtrl.create({ message: error.message, duration: 2000 });
+      toast.present();
+    }
   }
 
   async onShowDetails(id: string) {
-    await this.presentLoading('Please wait...');
+    const loading = await this.loadingCtrl.create({ message: " Attendez s'il vous plaît..." });
+    await loading.present();
 
     try {
-      const user = await this.formateurService.getFormateur(id);
-      const modal = await this.modalCtrl.create({
-        component: DetailPage,
-        componentProps: { user },
-        backdropDismiss: false,
-      });
+      const formateur = await this.formateurService.getFormateur(id);
+
+      const classe = await this.formateurService.getClasseByFormateur(formateur);
+
+      const modal = await this.modalCtrl.create({ component: DetailPage, componentProps: { formateur, classe }, backdropDismiss: false });
       this.loadingCtrl.dismiss();
       await modal.present();
-    } catch (error) {}
-  }
-
-  async onSort() {
-    const alert = await this.alertCtrl.create({
-      header: 'Sort',
-      inputs: [
-        {
-          type: 'radio',
-          label: 'Updated - recent',
-          value: 'updatedAtDesc',
-          checked: this.params.order === 'updatedAtDesc',
-        },
-        {
-          type: 'radio',
-          label: 'Updated - oldest',
-          value: 'updatedAtAsc',
-          checked: this.params.order === 'updatedAtAsc',
-        },
-        {
-          type: 'radio',
-          label: 'Created - recent',
-          value: 'createdAtDesc',
-          checked: this.params.order === 'createdAtDesc',
-        },
-        {
-          type: 'radio',
-          label: 'Created - oldest',
-          value: 'createdAtAsc',
-          checked: this.params.order === 'createdAtAsc',
-        },
-      ],
-
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-        },
-        {
-          text: 'Ok',
-          role: 'ok',
-        },
-      ],
-    });
-    await alert.present();
-
-    alert.onDidDismiss().then(async (result) => {
-      if (result.role === 'ok') {
-        this.params = { ...this.params, order: result.data.values };
-        this.getUsers();
-        this.isSortedBSubject$.next(this.params.order !== 'updatedAtDesc');
-      }
-    });
+    } catch (error) {
+      console.log(error);
+      const toast = await this.toastCtrl.create({ message: error.message, duration: 2000 });
+      toast.present();
+    }
   }
 
   async onDelete(id: string) {
     const alert = await this.alertCtrl.create({
-      header: 'Delete user',
-      message: 'Are you sure delete this user ?',
+      header: 'Supprimer un formateur',
+      message: 'Êtes-vous sûr de supprimer cet formateur ?',
       buttons: [
         {
-          text: 'No',
-          role: 'cancel',
+          text: 'Non',
+          role: 'Annuler',
         },
         {
-          text: 'Yes',
+          text: 'Oui',
           role: 'ok',
         },
       ],
@@ -142,25 +99,19 @@ export class FormateursPage extends Base implements OnInit {
       if (result.role === 'ok') {
         try {
           await this.formateurService.deleteFormateur(id);
-          this.getUsers();
-          await this.presentToast('USER_DELETED');
+          this.getFormateurs();
+          const toast = await this.toastCtrl.create({ message: 'Formateur supprimé', duration: 2000 });
+          toast.present();
         } catch (error) {
-          await this.presentToast(error.message);
+          const toast = await this.toastCtrl.create({ message: error.message, duration: 2000 });
+          toast.present();
         }
       }
     });
   }
 
   async onSearch(event: any) {
-    this.params = { ...this.params, searchTerm: event.detail.value.trim().toLowerCase() };
-    this.getUsers();
-  }
-
-  async onRefresh() {
-    this.params = { searchTerm: '', order: 'updatedAtDesc' };
-    await this.getUsers();
-    await this.ionRefresher.complete();
-    this.isSortedBSubject$.next(false);
+    this.getFormateurs({ searchTerm: event.detail.value.trim() });
   }
 
   async onLogout() {
@@ -168,19 +119,15 @@ export class FormateursPage extends Base implements OnInit {
     await this.router.navigateByUrl('/login');
   }
 
-  trackByFn(index: number, user: any) {
-    return user ? user.id : index;
-  }
-
-  private async getUsers() {
+  private async getFormateurs(params: any = {}) {
     try {
-      this.isLoadingBSubject$.next(true);
-      const users = await this.formateurService.getFormateurs(this.params);
-      this.objectsBSubject$.next(users);
-      this.isLoadingBSubject$.next(false);
+      this.isLoading = true;
+      this.formateurs = await this.formateurService.getFormateurs(params);
+      this.isLoading = false;
     } catch (error) {
-      this.isLoadingBSubject$.next(false);
-      await this.presentToast(error.message);
+      this.isLoading = false;
+      const toast = await this.toastCtrl.create({ message: error, duration: 2000 });
+      toast.present();
     }
   }
 }

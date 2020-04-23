@@ -7,8 +7,8 @@
     <ion-progress-bar type="indeterminate" *ngIf="isLoading$ | async"></ion-progress-bar>
     <ion-buttons slot="end">
       <ion-button (click)="onLogout()">
-        {{ user?.get('name') }}
-        <ion-icon slot="end" name="log-out"></ion-icon>
+        <ion-icon slot="start" name="log-out"></ion-icon>
+        Déconnexion
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -32,26 +32,13 @@
     </div>
 
     <ion-row>
-      <ion-col
-        *ngFor="let user of objects$ | async; trackBy: trackByFn"
-        sizeXs="12"
-        sizeSm="6"
-        sizeMd="6"
-        sizeLg="4"
-        sizeXl="4"
-      >
+      <ion-col *ngFor="let user of objects$ | async; trackBy: trackByFn" sizeXs="12" sizeSm="6" sizeMd="6" sizeLg="4" sizeXl="4">
         <ion-item lines="none">
           <ion-label>{{ user.get('name') }}</ion-label>
           <ion-button class="ion-no-margin" slot="end" fill="clear" (click)="onShowDetails(user.id)">
             <ion-icon slot="icon-only" name="menu"></ion-icon>
           </ion-button>
-          <ion-button
-            class="ion-no-margin"
-            slot="end"
-            fill="clear"
-            (click)="onDelete(user.id)"
-            *ngIf="userRole?.getName() === 'admin'"
-          >
+          <ion-button class="ion-no-margin" slot="end" fill="clear" (click)="onDelete(user.id)" *ngIf="userRole?.getName() === 'admin'">
             <ion-icon slot="icon-only" name="trash"></ion-icon>
           </ion-button>
         </ion-item>

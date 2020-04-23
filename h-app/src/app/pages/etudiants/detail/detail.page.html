@@ -10,7 +10,6 @@
 </ion-header>
 
 <ion-content>
-  <!-- pour le nom et prenom  -->
   <div class="ion-padding">
     <div class="ion-margin-vertical">
       <ion-item lines="none">
@@ -18,20 +17,10 @@
         <ion-input type="text" [value]="etudiant.get('name')" readonly></ion-input>
       </ion-item>
     </div>
-
-    <!-- la date de naissance  -->
-
     <div class="ion-margin-vertical">
       <ion-item lines="none">
         <ion-label position="stacked">Date de Naissance</ion-label>
         <ion-input type="Date" [value]="etudiant.get('date_naissance')" readonly></ion-input>
-      </ion-item>
-    </div>
-    <!-- le nombre d'absence -->
-    <div class="ion-margin-vertical">
-      <ion-item lines="none">
-        <ion-label position="stacked">Le nombre d'absences</ion-label>
-        <ion-input type="text" [value]="etudiant.get('absences')" readonly></ion-input>
       </ion-item>
     </div>
     <!-- les Classes -->

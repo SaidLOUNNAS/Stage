@@ -45,7 +45,7 @@ export class ClassesPage implements OnInit {
       modal.onDidDismiss().then(async (result) => {
         if (result.data) {
           this.getClasses();
-          const toast = await this.toastCtrl.create({ message: 'CLASSE_CREATED', duration: 2000 });
+          const toast = await this.toastCtrl.create({ message: 'classe_créée', duration: 2000 });
           toast.present();
         }
       });
@@ -56,7 +56,7 @@ export class ClassesPage implements OnInit {
   }
 
   async onShowDetails(id: string) {
-    const loading = await this.loadingCtrl.create({ message: 'Please wait...' });
+    const loading = await this.loadingCtrl.create({ message: "Attendez s'il vous plaît..." });
     await loading.present();
 
     try {
@@ -75,15 +75,15 @@ export class ClassesPage implements OnInit {
 
   async onDelete(id: string) {
     const alert = await this.alertCtrl.create({
-      header: 'Delete classe',
-      message: 'Are you sure delete this classe ?',
+      header: 'Supprimer cette classe',
+      message: 'Êtes-vous sûr de supprimer cette classe ?',
       buttons: [
         {
-          text: 'No',
-          role: 'cancel',
+          text: 'Non',
+          role: 'Annuler',
         },
         {
-          text: 'Yes',
+          text: 'Oui',
           role: 'ok',
         },
       ],
@@ -95,7 +95,7 @@ export class ClassesPage implements OnInit {
         try {
           await this.classeService.deleteClasse(id);
           this.getClasses();
-          const toast = await this.toastCtrl.create({ message: 'CLASSE_DELETED', duration: 2000 });
+          const toast = await this.toastCtrl.create({ message: 'Classe supprimée', duration: 2000 });
           toast.present();
         } catch (error) {
           const toast = await this.toastCtrl.create({ message: error.message, duration: 2000 });

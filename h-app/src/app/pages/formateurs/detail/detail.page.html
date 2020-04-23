@@ -14,49 +14,50 @@
     <div class="ion-margin-vertical">
       <ion-item lines="none">
         <ion-label position="stacked">Nom et Prénom</ion-label>
-        <ion-input type="text" [value]="user.get('name')" readonly></ion-input>
+        <ion-input type="text" [value]="formateur.get('name')" readonly></ion-input>
       </ion-item>
     </div>
 
     <div class="ion-margin-vertical">
       <ion-item lines="none">
         <ion-label position="stacked">Date de Naissance</ion-label>
-        <ion-input type="date" [value]="user.get('dat')" readonly></ion-input>
+        <ion-input type="date" [value]="formateur.get('dat')" readonly></ion-input>
       </ion-item>
     </div>
 
+    <!-- les Classes -->
     <div class="ion-margin-vertical">
       <ion-item lines="none">
         <ion-label position="stacked">Classe</ion-label>
-        <ion-input type="text" [value]="user.get('class')" readonly></ion-input>
+        <ion-input type="text" [value]="classe.get('name')" readonly></ion-input>
       </ion-item>
     </div>
 
     <div class="ion-margin-vertical">
       <ion-item lines="none">
         <ion-label position="stacked">Mail</ion-label>
-        <ion-input type="email" [value]="user.get('email')" readonly></ion-input>
+        <ion-input type="email" [value]="formateur.get('email')" readonly></ion-input>
       </ion-item>
     </div>
 
     <div class="ion-margin-vertical">
       <ion-item lines="none">
         <ion-label position="stacked">Numéro de Téléphone</ion-label>
-        <ion-input type="number" [value]="user.get('phone')" readonly></ion-input>
+        <ion-input type="number" [value]="formateur.get('phone')" readonly></ion-input>
       </ion-item>
     </div>
 
     <div class="ion-margin-vertical">
       <ion-item lines="none">
         <ion-label position="stacked">créer à </ion-label>
-        <ion-input type="text" [value]="user.get('createdAt') | date: 'medium'" readonly></ion-input>
+        <ion-input type="text" [value]="formateur.get('createdAt') | date: 'medium'" readonly></ion-input>
       </ion-item>
     </div>
 
     <div class="ion-margin-vertical">
       <ion-item lines="none">
         <ion-label position="stacked">Mise à jour </ion-label>
-        <ion-input type="text" [value]="user.get('updatedAt') | date: 'medium'" readonly></ion-input>
+        <ion-input type="text" [value]="formateur.get('updatedAt') | date: 'medium'" readonly></ion-input>
       </ion-item>
     </div>
   </div>

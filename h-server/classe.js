@@ -8,7 +8,7 @@ Parse.Cloud.define('createClasse', async (request) => {
   const cuserRole = await utils.getRoleByUser(cuser);
 
   if (!cuserRole || cuserRole.getName() !== 'admin') {
-    throw 'NOT_AUTHORIZED';
+    throw "N'est pas autorisé";
   }
 
   // créer une classe
@@ -27,7 +27,7 @@ Parse.Cloud.define('deleteClasse', async (request) => {
   const cuserRole = await utils.getRoleByUser(cuser);
 
   if (!cuserRole || cuserRole.getName() !== 'admin') {
-    throw 'NOT_AUTHORIZED';
+    throw "N'est pas autorisé";
   }
 
   const query = new Parse.Query('Classe');

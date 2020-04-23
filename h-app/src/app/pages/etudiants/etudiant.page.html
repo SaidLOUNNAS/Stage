@@ -6,7 +6,10 @@
     <ion-title>Etudiants</ion-title>
     <ion-progress-bar type="indeterminate" *ngIf="isLoading"></ion-progress-bar>
     <ion-buttons slot="end">
-      <ion-button (click)="onLogout()"> {{ user?.get('name') }} <ion-icon slot="end" name="log-out"></ion-icon> </ion-button>
+      <ion-button (click)="onLogout()">
+        <ion-icon slot="start" name="log-out"></ion-icon>
+        Déconnexion
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -17,7 +20,8 @@
 
     <div class="ion-text-end">
       <ion-button fill="clear" (click)="onCreate()" *ngIf="userRole?.getName() === 'admin'">
-        <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+        <ion-icon slot="start" name="add-circle"></ion-icon>
+        Ajouter
       </ion-button>
     </div>
 
