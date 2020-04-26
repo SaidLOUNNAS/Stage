@@ -26,12 +26,6 @@ export class UserService {
     return query.first();
   }
 
-  getRole(user: any): Promise<any> {
-    const query = new Parse.Query(Parse.Role);
-    query.equalTo('users', user);
-    return query.first();
-  }
-
   deleteEtudiant(id: string): Promise<any> {
     return Parse.Cloud.run('deleteUser', { id });
   }

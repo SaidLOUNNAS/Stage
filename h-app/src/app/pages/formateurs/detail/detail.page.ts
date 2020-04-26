@@ -9,7 +9,7 @@ import { ModalController } from '@ionic/angular';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DetailPage {
-  @Input() user: any;
+  @Input() formateur: any;
 
   constructor(private modalCtrl: ModalController) {}
 

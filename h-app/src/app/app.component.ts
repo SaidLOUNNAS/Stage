@@ -6,6 +6,8 @@ import * as Parse from 'parse';
 
 import { environment } from '../environments/environment';
 
+import { AuthService } from './services/auth.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -14,8 +16,13 @@ import { environment } from '../environments/environment';
 export class AppComponent {
   pages: any[];
 
-  constructor(private platform: Platform) {
+  constructor(private platform: Platform, private authService: AuthService) {
     this.initializeApp();
+  }
+
+  private setupParse() {
+    Parse.initialize(environment.appId, environment.appKey);
+    Parse.serverURL = environment.serverURL;
   }
 
   private setupPages() {
@@ -31,7 +38,6 @@ export class AppComponent {
         url: '/formateurs',
         icon: 'people',
       },
-
       {
         title: 'Etudiants',
         url: '/users',
@@ -42,11 +48,6 @@ export class AppComponent {
         url: '/classes',
         icon: 'albums-outline',
       },
-      {
-        title: 'Cours',
-        url: '/cours',
-        icon: 'reader-outline',
-      },
 
       {
         title: 'Profil',
@@ -56,15 +57,17 @@ export class AppComponent {
     ];
   }
 
-  private setupParse() {
-    Parse.initialize(environment.appId, environment.appKey);
-    Parse.serverURL = environment.serverURL;
-  }
-
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.setupPages();
+    this.platform.ready().then(async () => {
       this.setupParse();
+      this.setupPages();
+
+      const user = this.authService.getCurrentUser();
+      const userRole = await this.authService.getRole(user);
+
+      if (userRole && userRole.getName() === 'etudiant') {
+        this.pages = this.pages.filter((val) => val.title !== 'Formateurs');
+      }
     });
   }
 }

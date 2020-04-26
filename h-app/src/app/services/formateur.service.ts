@@ -16,6 +16,7 @@ export class FormateurService {
     const query = new Parse.Query('User');
 
     query.equalTo('type', 'formateur');
+
     if (params.searchTerm) {
       query.contains('name', params.searchTerm);
     }

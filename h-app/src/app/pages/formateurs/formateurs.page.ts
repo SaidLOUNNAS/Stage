@@ -121,7 +121,7 @@ export class FormateursPage implements OnInit {
       this.isLoading = false;
     } catch (error) {
       this.isLoading = false;
-      const toast = await this.toastCtrl.create({ message: error, duration: 2000 });
+      const toast = await this.toastCtrl.create({ message: error.message, duration: 2000 });
       toast.present();
     }
   }

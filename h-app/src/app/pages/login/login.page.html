@@ -8,24 +8,16 @@
       <ion-card-content>
         <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
           <ion-item class="ion-margin-vertical" color="light" lines="none">
-            <ion-input
-              type="email"
-              formControlName="email"
-              placeholder="Email"
-              autocomplete="false"
-              (keyup.enter)="onSubmit()"
-            >
-            </ion-input>
+            <ion-input type="email" formControlName="email" placeholder="Email" autocomplete="false" (keyup.enter)="onSubmit()"> </ion-input>
           </ion-item>
 
           <ion-item class="ion-margin-vertical" color="light" lines="none">
-            <ion-input type="password" formControlName="password" placeholder="Password" (keyup.enter)="onSubmit()">
-            </ion-input>
+            <ion-input type="password" formControlName="password" placeholder="Password" (keyup.enter)="onSubmit()"> </ion-input>
           </ion-item>
 
           <div class="ion-text-center">
-            <ion-button type="submit" shape="round" [disabled]="(isLoading$ | async) || form.invalid">
-              <ion-spinner *ngIf="isLoading$ | async"></ion-spinner>
+            <ion-button type="submit" shape="round" [disabled]="isLoading || form.invalid">
+              <ion-spinner *ngIf="isLoading"></ion-spinner>
               S'identifier
             </ion-button>
           </div>

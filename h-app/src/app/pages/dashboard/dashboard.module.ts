@@ -1,4 +1,5 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 
 import { Routes, RouterModule } from '@angular/router';
@@ -9,9 +10,6 @@ import { DashboardPage } from './dashboard.page';
 
 import { FormsModule } from '@angular/forms';
 
-// Calendar UI Module
-import { CalendarModule } from 'ion2-calendar';
-
 const routes: Routes = [
   {
     path: '',
@@ -20,9 +18,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), IonicModule, CalendarModule, FormsModule],
+  imports: [CommonModule, RouterModule.forChild(routes), IonicModule, FormsModule],
 
   declarations: [DashboardPage],
-  providers: [{ provide: LOCALE_ID, useValue: 'zh-CN' }],
 })
 export class DashboardModule {}

@@ -12,12 +12,12 @@ import { ProfilePage } from './profile.page';
 const routes: Routes = [
   {
     path: '',
-    component: ProfilePage
-  }
+    component: ProfilePage,
+  },
 ];
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), FormsModule, ReactiveFormsModule, IonicModule, ChangePasswordModule],
-  declarations: [ProfilePage]
+  declarations: [ProfilePage],
 })
 export class ProfileModule {}

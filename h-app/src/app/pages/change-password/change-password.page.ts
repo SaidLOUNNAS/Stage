@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, Injector } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
-import { CustomValidators } from '../../utils/CustomValidators';
+import { ModalController, ToastController } from '@ionic/angular';
 
-import { Base } from '../base/base';
+import { CustomValidators } from '../../utils/CustomValidators';
 
 import { AuthService } from '../../services/auth.service';
 
@@ -12,14 +12,13 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-change-password',
   templateUrl: './change-password.page.html',
   styleUrls: ['./change-password.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChangePasswordPage extends Base implements OnInit {
+export class ChangePasswordPage implements OnInit {
   public form: FormGroup;
 
-  constructor(injector: Injector, private fb: FormBuilder, private authService: AuthService) {
-    super(injector);
-  }
+  isLoading = false;
+
+  constructor(private fb: FormBuilder, private authService: AuthService, private modalCtrl: ModalController, private toastCtrl: ToastController) {}
 
   ngOnInit() {
     this.setupForm();
@@ -28,7 +27,7 @@ export class ChangePasswordPage extends Base implements OnInit {
   async onSubmit() {
     if (this.form.valid) {
       try {
-        this.isLoadingBSubject$.next(true);
+        this.isLoading = true;
 
         const user = this.authService.getCurrentUser();
 
@@ -36,24 +35,25 @@ export class ChangePasswordPage extends Base implements OnInit {
 
         await user.save({ password: this.form.value.password });
 
-        this.isLoadingBSubject$.next(false);
+        this.isLoading = false;
 
-        await this.modalCtrl.dismiss(true);
+        this.modalCtrl.dismiss(true);
       } catch (error) {
-        this.isLoadingBSubject$.next(false);
+        this.isLoading = false;
+
         if (error.code === 101) {
-          await this.presentToast('PASSWORD_INVALID');
+          const toast = await this.toastCtrl.create({ message: 'mot de passe incorrect', duration: 2000 });
+          toast.present();
         } else if (error.code === 141) {
-          await this.presentToast(error.message);
-        } else {
-          await this.presentToast('ERROR_NETWORK');
+          const toast = await this.toastCtrl.create({ message: error.message, duration: 2000 });
+          toast.present();
         }
       }
     }
   }
 
   async onClose() {
-    await this.modalCtrl.dismiss();
+    this.modalCtrl.dismiss();
   }
 
   private setupForm() {

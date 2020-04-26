@@ -31,13 +31,13 @@
       </ion-item>
     </div>
     <ion-item lines="none">
-      <ion-label>Liste des utilisateurs : </ion-label>
+      <ion-label size="large">Liste des utilisateurs : </ion-label>
     </ion-item>
 
     <ion-list>
       <ion-item *ngFor="let user of users">
-        <ion-label> {{user.get('name')}} </ion-label>
-        <ion-label> Tel : {{user.get('phone')}} </ion-label>
+        <ion-label color="success"> {{user.get('name')}} </ion-label>
+        <ion-label color="success"> Tel : {{user.get('phone')}} </ion-label>
       </ion-item>
     </ion-list>
   </div>
