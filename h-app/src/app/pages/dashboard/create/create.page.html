@@ -1,0 +1,74 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Ajouter un cours</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onClose()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="floating">Titre du cours<ion-text color="danger"> *</ion-text> </ion-label>
+          <ion-input type="text" formControlName="title" (keyup.enter)="onSubmit()"></ion-input>
+        </ion-item>
+        <div *ngIf="form.controls.title.hasError('required') && form.controls.title.dirty">
+          <ion-text color="danger">
+            <small>Le titre de cours est requis.</small>
+          </ion-text>
+        </div>
+      </div>
+
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="floating">Classe</ion-label>
+          <ion-select formControlName="classe" placeholder="selectionner une classe" [compareWith]="compareFn">
+            <ion-select-option *ngFor="let classe of classes" [value]="classe">{{classe.get('name')}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="floating">Formateurs</ion-label>
+          <ion-select formControlName="formateur" placeholder="selectionner une classe" [compareWith]="compareFn">
+            <ion-select-option *ngFor="let formateur of formateurs" [value]="formateur">{{formateur.get('name')}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="floating">Date</ion-label>
+          <ion-datetime formControlName="date" placeholder="Select Date"></ion-datetime>
+          <!--
+          <ion-label position="floating">Date :<ion-text color="danger"> *</ion-text> </ion-label>
+          <ion-input type="date" formControlName="date" (keyup.enter)="onSubmit()"></ion-input>-->
+        </ion-item>
+      </div>
+
+      <div class="ion-margin-vertical">
+        <ion-item lines="none">
+          <ion-label position="floating">Durée</ion-label>
+          <ion-select formControlName="duree" plolder="selectionner une durée">
+            <ion-select-option value="matin"> Matin </ion-select-option>
+            <ion-select-option value="apres-midi"> Après-midi </ion-select-option>
+            <ion-select-option value="toute-la-journee"> Toute la journée </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <div class="ion-text-center">
+        <ion-button type="submit" shape="round" [disabled]="isLoading || form.invalid">
+          <ion-spinner *ngIf="isLoading"></ion-spinner>
+          Enregistrer
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>

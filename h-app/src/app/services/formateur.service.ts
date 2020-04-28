@@ -12,7 +12,7 @@ export class FormateurService {
     return Parse.Cloud.run('createFormateur', params);
   }
 
-  getFormateurs(params: any): Promise<any> {
+  getFormateurs(params: any = {}): Promise<any> {
     const query = new Parse.Query('User');
 
     query.equalTo('type', 'formateur');
