@@ -13,7 +13,11 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import { DashboardPage } from './dashboard.page';
+
 import { CreateModule } from './create/create.module';
+
+import { DetailModule } from './detail/detail.module';
+
 import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
@@ -30,6 +34,7 @@ const routes: Routes = [
     IonicModule,
     NgbModalModule,
     CreateModule,
+    DetailModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,

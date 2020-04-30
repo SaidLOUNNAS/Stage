@@ -6,6 +6,7 @@ import * as Parse from 'parse';
   providedIn: 'root',
 })
 export class AuthService {
+  
   constructor() {}
 
   getCurrentUser(): any {

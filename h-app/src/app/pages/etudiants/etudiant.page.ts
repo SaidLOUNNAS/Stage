@@ -66,7 +66,6 @@ export class EtudiantPage implements OnInit {
 
     try {
       const etudiant = await this.etudiantService.getEtudiant(id);
-
       const classe = await this.etudiantService.getClasseByEtudiant(etudiant);
 
       const modal = await this.modalCtrl.create({ component: DetailPage, componentProps: { etudiant, classe }, backdropDismiss: false });

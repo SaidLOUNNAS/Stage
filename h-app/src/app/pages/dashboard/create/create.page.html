@@ -35,7 +35,7 @@
 
       <div class="ion-margin-vertical">
         <ion-item lines="none">
-          <ion-label position="floating">Formateurs</ion-label>
+          <ion-label position="floating">Formateur</ion-label>
           <ion-select formControlName="formateur" placeholder="selectionner une classe" [compareWith]="compareFn">
             <ion-select-option *ngFor="let formateur of formateurs" [value]="formateur">{{formateur.get('name')}}</ion-select-option>
           </ion-select>
@@ -44,11 +44,8 @@
 
       <div class="ion-margin-vertical">
         <ion-item lines="none">
-          <ion-label position="floating">Date</ion-label>
-          <ion-datetime formControlName="date" placeholder="Select Date"></ion-datetime>
-          <!--
-          <ion-label position="floating">Date :<ion-text color="danger"> *</ion-text> </ion-label>
-          <ion-input type="date" formControlName="date" (keyup.enter)="onSubmit()"></ion-input>-->
+          <ion-label position="floating">Date<ion-text color="danger"> *</ion-text> </ion-label>
+          <ion-input type="date" formControlName="date" (keyup.enter)="onSubmit()"></ion-input>
         </ion-item>
       </div>
 

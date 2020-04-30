@@ -36,7 +36,7 @@ export class CreatePage implements OnInit {
       } catch (error) {
         this.isLoading = false;
         if (error.code === 202 || error.code === 203) {
-          const toast = await this.toastCtrl.create({ message: 'Adresse email deja utilisé', duration: 2000 });
+          const toast = await this.toastCtrl.create({ message: 'Adresse email déja utilisé', duration: 2000 });
           toast.present();
         } else if (error.code === 125) {
           const toast = await this.toastCtrl.create({ message: "Adresse email n'est pas valide", duration: 2000 });

@@ -1,0 +1,64 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>détail</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onClose()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="ion-padding">
+    <div class="ion-margin-vertical">
+      <ion-item lines="none">
+        <ion-label position="stacked">Titre du cours</ion-label>
+        <ion-input type="text" [value]="cours.get('name')" readonly></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="ion-margin-vertical">
+      <ion-item lines="none">
+        <ion-label position="stacked">Classe</ion-label>
+        <ion-input type="text" [value]="cours.get('classe')?.get('name')" readonly></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="ion-margin-vertical">
+      <ion-item lines="none">
+        <ion-label position="stacked">Formateur</ion-label>
+        <ion-input type="text" [value]="cours.get('formateur')?.get('name')" readonly></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="ion-margin-vertical">
+      <ion-item lines="none">
+        <ion-label position="stacked">Date</ion-label>
+        <ion-input type="text" [value]="cours.get('date') | date " readonly></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="ion-margin-vertical">
+      <ion-item lines="none">
+        <ion-label position="stacked">Durée</ion-label>
+        <ion-input type="text" [value]="cours.get('duree')" readonly></ion-input>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="onDelete()" *ngIf="userRole?.getName() === 'admin'">
+        <ion-icon slot="start" name="trash"></ion-icon>
+        Supprimer
+      </ion-button>
+
+      <ion-button (click)="onClose()" *ngIf="userRole?.getName() === 'admin'">
+        <ion-icon slot="start" name="close"></ion-icon>
+        Fermer
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

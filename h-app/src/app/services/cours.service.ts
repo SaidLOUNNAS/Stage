@@ -15,11 +15,10 @@ export class CourService {
     cours.set('classe', params.classe);
     cours.set('formateur', params.formateur);
     cours.set('date', params.date);
+
     cours.set('duree', params.duree);
 
     return cours.save();
-
-    // return Parse.Cloud.run('createCour', params);
   }
 
   getCours(params: any = {}): Promise<any> {
@@ -32,11 +31,16 @@ export class CourService {
 
   getCour(id: string): Promise<any> {
     const query = new Parse.Query('Cours');
+    query.include('formateur');
+    query.include('classe');
     query.equalTo('objectId', id);
     return query.first();
   }
 
-  deleteCours(id: string): Promise<any> {
-    return Parse.Cloud.run('deleteCours', { id });
+  async deleteCours(id: string): Promise<any> {
+    const query = new Parse.Query('Cours');
+    query.equalTo('objectId', id);
+    const cours = await query.first();
+    return cours.destroy();
   }
 }

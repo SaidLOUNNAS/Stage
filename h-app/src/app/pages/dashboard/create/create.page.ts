@@ -5,7 +5,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 
 import { CourService } from '../../../services/cours.service';
-import { startOfDay, subDays, addDays } from 'date-fns';
+
 import { FormateurService } from 'src/app/services/formateur.service';
 import { ClasseService } from 'src/app/services/classe.service';
 
@@ -17,7 +17,6 @@ import { ClasseService } from 'src/app/services/classe.service';
 export class CreatePage implements OnInit {
   form: FormGroup;
   user: any;
-
   classes = [];
   formateurs = [];
 
@@ -57,7 +56,7 @@ export class CreatePage implements OnInit {
       title: [null, Validators.compose([Validators.required])],
       classe: [null],
       formateur: [null],
-      date: ['1990-02-19T00:00:00+01:00'],
+      date: [null],
       duree: ['matin'],
     });
   }
